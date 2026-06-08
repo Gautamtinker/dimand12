@@ -112,7 +112,7 @@ export const createPurchase = async (req, res, next) => {
 
     // Calculate packet amounts and totals
     const processedPackets = packets.map((packet) => ({
-      range: packet.range || "",
+      range: packet.range,
       caret: packet.caret,
       rate: packet.rate,
       amount: packet.caret * packet.rate,
@@ -130,6 +130,7 @@ export const createPurchase = async (req, res, next) => {
       materialCategory,
       packets: processedPackets,
       dueDate,
+      range,
       creditDays,
       notes,
       createdBy: req.user.id,
