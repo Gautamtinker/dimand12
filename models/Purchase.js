@@ -78,6 +78,10 @@ const purchaseSchema = new mongoose.Schema(
       type: Date,
       required: [true, "Please provide due date"],
     },
+    range: {
+      type: String,
+      trim: true,
+    },
     creditDays: {
       type: Number,
       default: 30,
