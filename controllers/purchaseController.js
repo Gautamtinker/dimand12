@@ -130,7 +130,6 @@ export const createPurchase = async (req, res, next) => {
       materialCategory,
       packets: processedPackets,
       dueDate,
-      range,
       creditDays,
       notes,
       createdBy: req.user.id,
