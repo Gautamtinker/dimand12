@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const packetSchema = new mongoose.Schema(
   {
+    range: {
+      type: String,
+      trim: true,
+    },
     caret: {
       type: Number,
       required: [true, "Please provide caret weight"],
