@@ -55,7 +55,7 @@ app.use(helmet());
 app.use(compression());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: process.env.FRONTEND_URL || "https://dimond-frontend.vercel.app",
     credentials: true,
   }),
 );
