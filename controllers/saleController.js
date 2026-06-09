@@ -109,6 +109,7 @@ export const createSale = async (req, res, next) => {
       dueDate,
       creditDays,
       notes,
+      globalDeduction,
       isFromApproval,
       approvalId,
     } = req.body;
@@ -127,6 +128,7 @@ export const createSale = async (req, res, next) => {
       dueDate,
       creditDays,
       notes,
+      globalDeduction: globalDeduction || 0,
       isFromApproval: isFromApproval || false,
       approvalId: approvalId || null,
       createdBy: req.user.id,
