@@ -124,6 +124,16 @@ const saleSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    globalDeduction: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100,
+    },
+    globalDeductionAmount: {
+      type: Number,
+      default: 0,
+    },
     outstandingAmount: {
       type: Number,
       default: 0,
@@ -175,8 +185,13 @@ saleSchema.pre("save", function (next) {
     return sum + broker.amount;
   }, 0);
 
+  // Calculate global deduction
+  this.globalDeductionAmount =
+    (this.grossAmount * (this.globalDeduction || 0)) / 100;
+
   // Calculate net amount
-  this.netAmount = this.grossAmount - this.totalBrokerCommission;
+  this.netAmount =
+    this.grossAmount - this.totalBrokerCommission - this.globalDeductionAmount;
   this.outstandingAmount = this.netAmount - this.totalReceivedAmount;
 
   // Update status based on payment
