@@ -134,6 +134,15 @@ const saleSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    out: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    netCaret: {
+      type: Number,
+      default: 0,
+    },
     outstandingAmount: {
       type: Number,
       default: 0,
@@ -188,6 +197,9 @@ saleSchema.pre("save", function (next) {
   // Calculate global deduction
   this.globalDeductionAmount =
     (this.grossAmount * (this.globalDeduction || 0)) / 100;
+
+  // Calculate net caret (total caret minus out)
+  this.netCaret = this.totalCaret - (this.out || 0);
 
   // Calculate net amount
   this.netAmount =
