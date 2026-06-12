@@ -201,9 +201,18 @@ saleSchema.pre("save", function (next) {
   // Calculate net caret (total caret minus out)
   this.netCaret = this.totalCaret - (this.out || 0);
 
-  // Calculate net amount
+  // Calculate amount after global deduction (before broker commission and out)
+  const amountAfterGlobalDeduction =
+    this.grossAmount - this.globalDeductionAmount;
+
+  // Calculate average rate for out deduction
+  const averageRate =
+    this.totalCaret > 0 ? this.grossAmount / this.totalCaret : 0;
+  const outAmount = (this.out || 0) * averageRate;
+
+  // Calculate net amount (subtracting broker commission and out amount)
   this.netAmount =
-    this.grossAmount - this.totalBrokerCommission - this.globalDeductionAmount;
+    amountAfterGlobalDeduction - this.totalBrokerCommission - outAmount;
   this.outstandingAmount = this.netAmount - this.totalReceivedAmount;
 
   // Update status based on payment
